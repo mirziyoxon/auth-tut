@@ -1,0 +1,4 @@
+const SUPABASE_URL = "https://alpesjeugegevlyoewut.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFscGVzamV1Z2VnZXZseW9ld3V0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ0MDgzMDMsImV4cCI6MjA3OTk4NDMwM30.4BSNKUMic7V7lwMhzFzUb_FXfcx5pgAOuI-zhN_Z2xs";
+
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
