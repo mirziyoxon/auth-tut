@@ -4,8 +4,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase.js"></script>
+
+  <!-- Load Supabase v2 correctly -->
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    const supabase = createClient(
+      "https://alpesjeugegevlyoewut.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFscGVzamV1Z2VnZXZseW9ld3V0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ0MDgzMDMsImV4cCI6MjA3OTk4NDMwM30.4BSNKUMic7V7lwMhzFzUb_FXfcx5pgAOuI-zhN_Z2xs"
+    );
+
+    // Expose supabase + login function to window
+    window.supabase = supabase;
+
+    window.redirectIfLoggedIn = async function () {
+      const { data } = await supabase.auth.getUser();
+      if (data.user) window.location.href = "https://unicorner.uz";
+    };
+
+    window.login = async function () {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) return alert(error.message);
+
+      window.location.href = "https://unicorner.uz";
+    };
+
+    // Call redirect check
+    redirectIfLoggedIn();
+  </script>
+
   <style>
     body { font-family: Arial, sans-serif; background: #f0f2f5; display:flex; justify-content:center; align-items:center; height:100vh; margin:0; }
     .card { background:white; padding:40px; width:350px; border-radius:20px; box-shadow:0 4px 20px rgba(0,0,0,0.1); text-align:center; } 
@@ -24,23 +54,5 @@
     <button onclick="login()">Login</button>
     <div class="link">Don't have an account? <a href="https://authentication.unicorner.uz">Sign Up</a></div>
   </div>
-
-  <script>
-    async function redirectIfLoggedIn() {
-      const { data } = await supabase.auth.getUser();
-      if (data.user) window.location.href = "https://unicorner.uz";
-    }
-    redirectIfLoggedIn();
-
-    async function login() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) return alert(error.message);
-
-      window.location.href = "https://unicorner.uz";
-    }
-  </script>
 </body>
 </html>
