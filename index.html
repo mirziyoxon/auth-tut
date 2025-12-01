@@ -2,8 +2,29 @@
 <html>
 <head>
   <title>Sign Up</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase.js"></script>
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    const supabase = createClient(
+      "https://alpesjeugegevlyoewut.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFscGVzamV1Z2VnZXZseW9ld3V0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ0MDgzMDMsImV4cCI6MjA3OTk4NDMwM30.4BSNKUMic7V7lwMhzFzUb_FXfcx5pgAOuI-zhN_Z2xs"
+    );
+
+    window.signup = async function () {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      const { error } = await supabase.auth.signUp({ email, password });
+
+      if (error) {
+        alert(error.message);
+        return;
+      }
+
+      alert("Account created! You can now log in.");
+      window.location.href = "https://authentication.unicorner.uz/login";
+    };
+  </script>
 </head>
 <body>
 
@@ -13,26 +34,6 @@
 <input id="password" type="password" placeholder="Password"><br><br>
 
 <button onclick="signup()">Sign Up</button>
-
-<script>
-async function signup() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  const { error } = await supabase.auth.signUp({
-    email,
-    password
-  });
-
-  if (error) {
-    alert(error.message);
-    return;
-  }
-
-  alert("Account created! You can now log in.");
-  window.location = "https://authentication.unicorner.uz/login";
-}
-</script>
 
 </body>
 </html>
